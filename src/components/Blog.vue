@@ -1,8 +1,8 @@
 <template>
   <div class="blog">
     <h1>{{ msg }}</h1>
-    <Post v-for="item in posts" :key="item.id"></Post>  
-    <Pagination v-if="posts.lenght > 10"/>  
+    <Post />
+    <Pagination />
   </div>
 </template>
 

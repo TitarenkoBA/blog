@@ -2,8 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <Auth v-if="this.state.auth = 'false'" />
-      <router-link to="/account" v-else>Account</router-link>
+      <Auth />
+      <router-link to="/account">Account</router-link>
     </div>
     <router-view/>
   </div>
