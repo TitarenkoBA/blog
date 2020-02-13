@@ -1,21 +1,29 @@
 <template>
-  <div class="auth">
-    <form>
-        <label for="email">Enter your email</label>
-        <input type="email" id="email">
-        <label for="password" id="password">Enter your password</label>
-        <input type="password">
-        <button type="submit"></button>
-    </form>    
-  </div>
+    <section>
+        <b-field label="Username"
+            :type="{ 'is-danger': hasError }"
+            :message="{ 'Username is not available': hasError }">
+            <b-input maxlength="30"></b-input>
+        </b-field>
+
+        <b-field label="Password"
+            :type="{ 'is-danger': hasError }"
+            :message="[
+                { 'Password is too short': hasError },
+                { 'Password must have at least 8 characters': hasError }
+            ]">
+            <b-input type="password" maxlength="30"></b-input>
+        </b-field>
+    </section>
 </template>
 
 <script>
-export default {
-  name: 'Auth'
-}
+    export default {
+        name: 'Auth',
+        data() {
+            return {
+                hasError: true
+            }
+        }
+    }
 </script>
-
-<style scoped lang="less">
-
-</style>
