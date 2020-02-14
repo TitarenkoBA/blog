@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <Auth />
-      <router-link to="/account">Account</router-link>
-    </div>
+    <header>
+      <img alt="" src="./assets/logo.jpg">
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/account">Account</router-link>
+      </div>
+    </header>
     <router-view/>
   </div>
 </template>
@@ -17,10 +19,8 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -29,5 +29,9 @@
       color: #42b983;
     }
   }
+}
+img {
+  width: 20%;
+  height: auto;
 }
 </style>

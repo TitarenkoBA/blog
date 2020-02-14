@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="modal-card">
     <hr>
     <b-pagination
       :total="total"
@@ -27,14 +27,14 @@ export default {
   data () {
     return {
       total: 200,
-      current: 10,
+      current: 1,
       perPage: 10,
-      rangeBefore: 3,
-      rangeAfter: 1,
-      order: '',
-      size: '',
+      rangeBefore: 2,
+      rangeAfter: 2,
+      order: 'is-centered',
+      size: 'is-small',
       isSimple: false,
-      isRounded: true,
+      isRounded: false,
       prevIcon: 'chevron-left',
       nextIcon: 'chevron-right'
     }

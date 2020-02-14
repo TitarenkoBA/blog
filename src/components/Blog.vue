@@ -15,15 +15,10 @@ export default {
   components: {
     Post,
     Pagination
-  },
-  props: {
-    msg: String
   }
 }
 </script>
 
 <style scoped lang="less">
-h3 {
-  margin: 40px 0 0;
-}
+
 </style>

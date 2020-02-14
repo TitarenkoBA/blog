@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img alt="" src="../assets/logo.png">
-    <Blog msg="Welcome to News Blog"/>
+    <Blog />
   </div>
 </template>
 
@@ -16,3 +15,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img {
+  width: 25%;
+  height: auto;
+}
+</style>

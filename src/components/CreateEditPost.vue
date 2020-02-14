@@ -1,20 +1,21 @@
 <template>
-  <b-button type="is-info" icon-left="account"
+  <b-button type="is-info"
+    con-left="delete"
     @click="cardModal()">
-    Log in
+    Create
   </b-button>
 </template>
 
 <script>
-import ModalForm from '@/components/ModalForm.vue'
+import ModalCreateEditPost from '@/components/ModalCreateEditPost.vue'
 
 export default {
-  name: 'Auth',
+  name: 'CreatEditPost',
   methods: {
     cardModal () {
       this.$buefy.modal.open({
         parent: this,
-        component: ModalForm,
+        component: ModalCreateEditPost,
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
         trapFocus: true
@@ -23,3 +24,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.buttons {
+  justify-content: right;
+}
+textarea {
+  width: 90%;
+  height: 80%;
+}
+</style>
