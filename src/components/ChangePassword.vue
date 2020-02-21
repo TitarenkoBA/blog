@@ -1,20 +1,20 @@
 <template>
-  <b-button type="is-info" icon-left="account"
+  <b-button type="is-info"
     @click="cardModal()">
-    Log in
+    Change password
   </b-button>
 </template>
 
 <script>
-import ModalForm from '@/components/ModalForm.vue'
+import ModalFormChangePassword from '@/components/ModalFormChangePassword.vue'
 
 export default {
-  name: 'Auth',
+  name: 'ChangePassword',
   methods: {
     cardModal () {
       this.$buefy.modal.open({
         parent: this,
-        component: ModalForm,
+        component: ModalFormChangePassword,
         hasModalCard: true,
         customClass: 'custom-class custom-class-2',
         trapFocus: true

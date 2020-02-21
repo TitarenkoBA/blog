@@ -1,8 +1,7 @@
 <template>
   <b-button type="is-info"
-    con-left="delete"
     @click="cardModal()">
-    Create
+    <slot></slot>
   </b-button>
 </template>
 
@@ -11,8 +10,11 @@ import ModalCreateEditPost from '@/components/ModalCreateEditPost.vue'
 
 export default {
   name: 'CreatEditPost',
+  props: ['setButtonType', 'postIndex'],
   methods: {
     cardModal () {
+      this.checkButtonType()
+      this.rememberEditingPost()
       this.$buefy.modal.open({
         parent: this,
         component: ModalCreateEditPost,
@@ -20,6 +22,14 @@ export default {
         customClass: 'custom-class custom-class-2',
         trapFocus: true
       })
+    },
+    checkButtonType () {
+      const button = this.setButtonType
+      this.$store.dispatch('setButtonType', button)
+    },
+    rememberEditingPost () {
+      const post = this.$store.state.posts[this.postIndex]
+      this.$store.dispatch('rememberEditingPost', post)
     }
   }
 }

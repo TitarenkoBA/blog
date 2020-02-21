@@ -16,7 +16,7 @@
     </section>
     <footer class="modal-card-foot">
       <button class="button" type="button" @click="$parent.close()">Cancel</button>
-      <button class="button is-primary">Save</button>
+      <button class="button is-primary" @click.prevent="save()">Save</button>
     </footer>
     </div>
   </form>
@@ -28,6 +28,36 @@ export default {
   props: {
     title: String,
     message: String
+  },
+  methods: {
+    save () {
+      if (this.$store.state.buttonType === 'add') {
+        const post = {
+          id: Math.round(Math.random() * 100),
+          title: document.querySelector('input').value,
+          description: document.querySelector('textarea').value,
+          claps: 0,
+          createdAt: new Date(),
+          updateAt: new Date(),
+          userId: this.$store.state.loggedUser.id
+        }
+        this.$store.dispatch('createPost', post)
+      } else {
+        const post = { ...this.$store.state.editingPost }
+        post.title = document.querySelector('input').value
+        post.description = document.querySelector('textarea').value
+        post.updateAt = new Date()
+        post.userId = this.$store.state.loggedUser.id
+        this.$store.dispatch('editPost', post)
+      }
+      this.$parent.close()
+    }
+  },
+  mounted () {
+    if (this.$store.state.buttonType === 'edit') {
+      document.querySelector('input').value = this.$store.state.editingPost.title
+      document.querySelector('textarea').value = this.$store.state.editingPost.description
+    }
   }
 }
 </script>

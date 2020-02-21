@@ -1,15 +1,61 @@
 <template>
   <div id="app">
-    <header>
-      <img alt="" src="./assets/logo.jpg">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/account">Account</router-link>
-      </div>
-    </header>
+    <b-navbar class="container">
+        <template slot="brand">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+              <img
+                src="@/assets/logo-1.jpg"
+                alt="Logo Lorem ipsum"
+              >
+            </b-navbar-item>
+        </template>
+
+        <template slot="start">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                Home
+            </b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{ path: '/account' }">
+                Account
+            </b-navbar-item>
+        </template>
+
+        <template slot="end">
+            <b-navbar-item tag="div">
+                <div class="buttons is-centered">
+                    <SignUp v-if="!this.loggedUser.role"/>
+                    <LogIn v-if="!this.loggedUser.role"/>
+                    <b-button v-else type="is-light" @click="logOut()">
+                      Log out
+                    </b-button>
+                </div>
+            </b-navbar-item>
+        </template>
+    </b-navbar>
     <router-view/>
   </div>
 </template>
+
+<script>
+import LogIn from '@/components/LogIn.vue'
+import SignUp from '@/components/SignUp.vue'
+
+export default {
+  components: {
+    LogIn,
+    SignUp
+  },
+  methods: {
+    logOut () {
+      this.$store.dispatch('logOut')
+    }
+  },
+  computed: {
+    loggedUser () {
+      return this.$store.state.loggedUser
+    }
+  }
+}
+</script>
 
 <style lang="less">
 #app {
@@ -31,7 +77,7 @@
   }
 }
 img {
-  width: 20%;
+  width: auto;
   height: auto;
 }
 </style>

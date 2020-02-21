@@ -1,20 +1,25 @@
 <template>
   <div class="modal-card">
     <header class="modal-card-head">
-      <h3 class="modal-card-title">Good news, guys</h3>
+      <h3 class="modal-card-title">{{post.title}}</h3>
     </header>
     <section class="modal-card-body">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid eius ullam accusantium quos dolorem expedita numquam nulla pariatur obcaecati laboriosam odio debitis perspiciatis ipsa temporibus quisquam iste omnis, similique officiis!</p>
-      <p class="date">2020-10-01</p>
+      <p>{{post.description}}</p>
+      <p class="date">{{new Date(Date.parse(post.createdAt))}}</p>
+      <p class="date">{{new Date(Date.parse(post.updateAt))}}</p>
       <div class="buttons">
-        <CreateEditPost class="CreateEditPost CreatePost"/>
-        <CreateEditPost class="CreateEditPost EditPost"/>
-        <b-button type="is-info">
+        <CreateEditPost v-if="this.loggedUserRole === 'writer'" setButtonType="edit" :postIndex="this.postIndex">Edit</CreateEditPost>
+        <b-button v-if="this.loggedUserRole === 'writer'" type="is-info" @click="remove()">
           Delete
         </b-button>
-        <b-button type="is-info"
-          icon-left="delete">
-          <p>1</p>
+        <b-button v-if="this.loggedUserRole === 'reader'" type="is-info" @click="clap()">
+          <b-icon
+            pack="fas"
+            icon="sign-language"
+            size="is-small"
+            class="middle">
+          </b-icon>
+          <span class="middle">{{post.claps}}</span>
         </b-button>
       </div>
     </section>
@@ -28,6 +33,23 @@ export default {
   name: 'Post',
   components: {
     CreateEditPost
+  },
+  props: ['post'],
+  methods: {
+    clap () {
+      this.$store.dispatch('clapPost', this.postIndex)
+    },
+    remove () {
+      this.$store.dispatch('deletePost', this.postIndex)
+    }
+  },
+  computed: {
+    postIndex () {
+      return this.$store.state.posts.findIndex((item) => item.id === this.post.id)
+    },
+    loggedUserRole () {
+      return this.$store.state.loggedUser.role
+    }
   }
 }
 </script>
@@ -42,7 +64,7 @@ p{
 .date {
   text-align: right;
 }
-.CreateEditPost {
-  margin-right: 8px;
+.middle {
+  vertical-align: middle;
 }
 </style>
