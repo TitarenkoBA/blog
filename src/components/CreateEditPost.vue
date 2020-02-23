@@ -10,7 +10,7 @@ import ModalCreateEditPost from '@/components/ModalCreateEditPost.vue'
 
 export default {
   name: 'CreatEditPost',
-  props: ['setButtonType', 'postIndex'],
+  props: ['setButtonType', 'postID'],
   methods: {
     cardModal () {
       this.checkButtonType()
@@ -24,12 +24,10 @@ export default {
       })
     },
     checkButtonType () {
-      const button = this.setButtonType
-      this.$store.dispatch('setButtonType', button)
+      this.$store.dispatch('setButtonType', this.setButtonType)
     },
     rememberEditingPost () {
-      const post = this.$store.state.posts[this.postIndex]
-      this.$store.dispatch('rememberEditingPost', post)
+      this.$store.dispatch('rememberEditingPost', this.postID)
     }
   }
 }

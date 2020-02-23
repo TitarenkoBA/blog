@@ -43,7 +43,7 @@ export default {
         }
         this.$store.dispatch('createPost', post)
       } else {
-        const post = { ...this.$store.state.editingPost }
+        const post = {}
         post.title = document.querySelector('input').value
         post.description = document.querySelector('textarea').value
         post.updateAt = new Date()
@@ -55,8 +55,8 @@ export default {
   },
   mounted () {
     if (this.$store.state.buttonType === 'edit') {
-      document.querySelector('input').value = this.$store.state.editingPost.title
-      document.querySelector('textarea').value = this.$store.state.editingPost.description
+      document.querySelector('input').value = this.$store.state.posts.find((item) => item.id === this.$store.state.editingPost).title
+      document.querySelector('textarea').value = this.$store.state.posts.find((item) => item.id === this.$store.state.editingPost).description
     }
   }
 }

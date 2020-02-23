@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     buttonType: '',
-    editingPost: {},
+    editingPost: '',
     loggedUser: {
       id: 1,
       login: 'writer@mail.com',
@@ -28,44 +28,7 @@ export default new Vuex.Store({
         role: 'reader'
       }
     ],
-    posts: [
-      {
-        id: 1,
-        title: 'Название поста',
-        description: 'Текст',
-        claps: 0,
-        createdAt: '2019-09-29T00:00:00.000Z',
-        updateAt: '2019-09-29T00:00:00.000Z',
-        userId: 1
-      },
-      {
-        id: 2,
-        title: 'Название поста',
-        description: 'Текст',
-        claps: 0,
-        createdAt: '2019-09-29T00:00:00.000Z',
-        updateAt: '2019-09-29T00:00:00.000Z',
-        userId: 1
-      },
-      {
-        id: 3,
-        title: 'Название постa',
-        description: 'Текст',
-        claps: 0,
-        createdAt: '2019-09-29T00:00:00.000Z',
-        updateAt: '2019-09-29T00:00:00.000Z',
-        userId: 1
-      },
-      {
-        id: 4,
-        title: 'Название постa',
-        description: 'Текст',
-        claps: 0,
-        createdAt: '2019-09-29T00:00:00.000Z',
-        updateAt: '2019-09-29T00:00:00.000Z',
-        userId: 1
-      }
-    ]
+    posts: []
   },
   mutations: {
     SignUp (state, user) {
@@ -81,20 +44,21 @@ export default new Vuex.Store({
     createPost (state, post) {
       this.state.posts.unshift(post)
     },
-    deletePost (state, postIndex) {
-      this.state.posts.splice(postIndex, 1)
+    deletePost (state, postID) {
+      this.state.posts.splice(this.state.posts.findIndex((item) => item.id === postID), 1)
     },
     editPost (state, post) {
-      this.state.editingPost.title = post.title
-      this.state.editingPost.description = post.description
-      this.state.editingPost.updateAt = post.updateAt
-      this.state.editingPost.userId = post.userId
+      const editingPost = this.state.posts.find((item) => item.id === this.state.editingPost)
+      editingPost.title = post.title
+      editingPost.description = post.description
+      editingPost.updateAt = post.updateAt
+      editingPost.userId = post.userId
     },
-    clapPost (state, postIndex) {
-      this.state.posts[postIndex].claps++
+    clapPost (state, postID) {
+      this.state.posts.find((item) => item.id === postID).claps++
     },
-    rememberEditingPost (state, post) {
-      this.state.editingPost = post
+    rememberEditingPost (state, postID) {
+      this.state.editingPost = postID
     },
     setButtonType (state, button) {
       this.state.buttonType = button
@@ -104,7 +68,7 @@ export default new Vuex.Store({
       this.state.users.find((item) => item.id === this.state.loggedUser.id).password = newPassword
     },
     loadPosts (state, data) {
-      alert(data)
+      this.state.posts = data
     }
   },
   actions: {
@@ -118,19 +82,23 @@ export default new Vuex.Store({
       context.commit('logIn', user)
     },
     createPost (context, post) {
-      context.commit('createPost', post)
+      Axios.post('/api/posts', post)
+        .then(context.commit('createPost', post))
+        .catch(error => {
+          console.log(error)
+        })
     },
-    deletePost (context, postIndex) {
-      context.commit('deletePost', postIndex)
+    deletePost (context, postID) {
+      context.commit('deletePost', postID)
     },
     editPost (context, post) {
       context.commit('editPost', post)
     },
-    clapPost (context, postIndex) {
-      context.commit('clapPost', postIndex)
+    clapPost (context, postID) {
+      context.commit('clapPost', postID)
     },
-    rememberEditingPost (context, post) {
-      context.commit('rememberEditingPost', post)
+    rememberEditingPost (context, postID) {
+      context.commit('rememberEditingPost', postID)
     },
     setButtonType (context, button) {
       context.commit('setButtonType', button)
@@ -138,9 +106,12 @@ export default new Vuex.Store({
     changePassword (context, newPassword) {
       context.commit('changePassword', newPassword)
     },
-    async loadPosts (context) {
-      Axios.get('http://localhost:8080/api/posts').then((response) => alert(response.data))
-      context.commit('loadPosts')
+    loadPosts (context) {
+      Axios.get('/api/posts')
+        .then(response => context.commit('loadPosts', response.data))
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 })

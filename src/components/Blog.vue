@@ -27,6 +27,9 @@ export default {
   methods: {
     setButtonType () {
       this.$store.state.buttonType = 'add'
+    },
+    log (item) {
+      console.log(item)
     }
   },
   mounted () {

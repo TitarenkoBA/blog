@@ -8,7 +8,7 @@
       <p class="date">{{new Date(Date.parse(post.createdAt))}}</p>
       <p class="date">{{new Date(Date.parse(post.updateAt))}}</p>
       <div class="buttons">
-        <CreateEditPost v-if="this.loggedUserRole === 'writer'" setButtonType="edit" :postIndex="this.postIndex">Edit</CreateEditPost>
+        <CreateEditPost v-if="this.loggedUserRole === 'writer'" setButtonType="edit" :postID="this.post.id">Edit</CreateEditPost>
         <b-button v-if="this.loggedUserRole === 'writer'" type="is-info" @click="remove()">
           Delete
         </b-button>
@@ -37,16 +37,13 @@ export default {
   props: ['post'],
   methods: {
     clap () {
-      this.$store.dispatch('clapPost', this.postIndex)
+      this.$store.dispatch('clapPost', this.post.id)
     },
     remove () {
-      this.$store.dispatch('deletePost', this.postIndex)
+      this.$store.dispatch('deletePost', this.post.id)
     }
   },
   computed: {
-    postIndex () {
-      return this.$store.state.posts.findIndex((item) => item.id === this.post.id)
-    },
     loggedUserRole () {
       return this.$store.state.loggedUser.role
     }
