@@ -14,28 +14,22 @@ app.get('/api/posts', (req, res) => {
   })
 })
 
-app.get('/api/users', (req, res) => {
-  fs.readFile('server/db/users.json', 'utf-8', (err, data) => {
-    if (err) {
-      res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
-    } else {
-      res.send(data)
-    }
-  })
-})
-
 const handler = require('./handler')
 
 app.post('/api/posts', (req, res) => {
   handler(req, res, 'add', 'server/db/posts.json')
 })
 
-app.put('/api/posts/:id', (req, res) => {
+app.put('/api/posts', (req, res) => {
   handler(req, res, 'change', 'server/db/posts.json')
 })
 
-app.delete('/api/posts/:id', (req, res) => {
+app.delete('/api/posts', (req, res) => {
   handler(req, res, 'remove', 'server/db/posts.json')
+})
+
+app.put('/api/post', (req, res) => {
+  handler(req, res, 'clap', 'server/db/posts.json')
 })
 
 app.listen(3000, () => console.log('listening at port 3000...'))

@@ -1,20 +1,29 @@
 const add = (posts, req) => {
-  posts.push(req.body)
+  posts.unshift(req.body)
   return JSON.stringify(posts, null, 4)
 }
 
 const change = (posts, req) => {
-  const find = posts.contents.find(el => el.id_product === +req.params.id)
-  find.quantity += req.body.quantity
+  const find = posts.find((item) => item.id === +req.body.id)
+  find.title = req.body.title
+  find.description = req.body.description
+  find.updateAt = req.body.updateAt
+  find.userId = req.body.userId
   return JSON.stringify(posts, null, 4)
 }
 
 const remove = (posts, req) => {
-  const find = posts.contents.find(el => el.id_product === +req.params.id)
-  posts.contents.splice(posts.contents.indexOf(find), 1)
+  const find = posts.findIndex((item) => item.id === +req.body)
+  posts.splice(find - 1, 1)
+  return JSON.stringify(posts, null, 4)
+}
+
+const clap = (posts, req) => {
+  const find = posts.find((item) => item.id === 18)
+  find.claps++
   return JSON.stringify(posts, null, 4)
 }
 
 module.exports = {
-  add, change, remove
+  add, change, remove, clap
 }

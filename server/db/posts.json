@@ -1,47 +1,20 @@
 [
     {
-        "id": 1,
-        "title": "Название поста",
-        "description": "Текст",
-        "claps": 0,
-        "createdAt": "2019-09-29T00:00:00.000Z",
-        "updateAt": "2019-09-29T00:00:00.000Z",
-        "userId": 1
+        "id": 18,
+        "title": "4",
+        "description": "",
+        "claps": 1,
+        "createdAt": "2020-02-23T19:13:45.989Z",
+        "updateAt": "2020-02-23T20:13:00.393Z",
+        "userId": 2
     },
     {
-        "id": 2,
-        "title": "Название поста",
-        "description": "Текст",
-        "claps": 0,
-        "createdAt": "2019-09-29T00:00:00.000Z",
-        "updateAt": "2019-09-29T00:00:00.000Z",
-        "userId": 1
-    },
-    {
-        "id": 3,
-        "title": "Название поста",
-        "description": "Текст",
-        "claps": 0,
-        "createdAt": "2019-09-29T00:00:00.000Z",
-        "updateAt": "2019-09-29T00:00:00.000Z",
-        "userId": 1
-    },
-    {
-        "id": 19,
-        "title": "",
+        "id": 56,
+        "title": "1",
         "description": "",
         "claps": 0,
-        "createdAt": "2020-02-23T17:01:44.710Z",
-        "updateAt": "2020-02-23T17:01:44.710Z",
-        "userId": 1
-    },
-    {
-        "id": 91,
-        "title": "",
-        "description": "",
-        "claps": 0,
-        "createdAt": "2020-02-23T17:02:13.173Z",
-        "updateAt": "2020-02-23T17:02:13.173Z",
-        "userId": 1
+        "createdAt": "2020-02-23T18:53:55.634Z",
+        "updateAt": "2020-02-23T18:53:55.634Z",
+        "userId": 2
     }
 ]

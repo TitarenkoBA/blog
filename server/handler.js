@@ -4,7 +4,8 @@ const fs = require('fs')
 const actions = {
   add: posts.add,
   change: posts.change,
-  remove: posts.remove
+  remove: posts.remove,
+  clap: posts.clap
 }
 
 const handler = (req, res, action, file) => {

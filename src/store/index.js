@@ -9,7 +9,7 @@ export default new Vuex.Store({
     buttonType: '',
     editingPost: '',
     loggedUser: {
-      id: 1,
+      id: 2,
       login: 'writer@mail.com',
       password: '123456',
       role: 'writer'
@@ -48,7 +48,7 @@ export default new Vuex.Store({
       this.state.posts.splice(this.state.posts.findIndex((item) => item.id === postID), 1)
     },
     editPost (state, post) {
-      const editingPost = this.state.posts.find((item) => item.id === this.state.editingPost)
+      const editingPost = this.state.posts.find((item) => item.id === post.id)
       editingPost.title = post.title
       editingPost.description = post.description
       editingPost.updateAt = post.updateAt
@@ -89,13 +89,25 @@ export default new Vuex.Store({
         })
     },
     deletePost (context, postID) {
-      context.commit('deletePost', postID)
+      Axios.delete('/api/posts', postID)
+        .then(context.commit('deletePost', postID))
+        .catch(error => {
+          console.log(error)
+        })
     },
     editPost (context, post) {
-      context.commit('editPost', post)
+      Axios.put('/api/posts', post)
+        .then(context.commit('editPost', post))
+        .catch(error => {
+          console.log(error)
+        })
     },
     clapPost (context, postID) {
-      context.commit('clapPost', postID)
+      Axios.put('/api/post', postID)
+        .then(context.commit('clapPost', postID))
+        .catch(error => {
+          console.log(error)
+        })
     },
     rememberEditingPost (context, postID) {
       context.commit('rememberEditingPost', postID)

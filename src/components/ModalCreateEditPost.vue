@@ -43,11 +43,15 @@ export default {
         }
         this.$store.dispatch('createPost', post)
       } else {
-        const post = {}
-        post.title = document.querySelector('input').value
-        post.description = document.querySelector('textarea').value
-        post.updateAt = new Date()
-        post.userId = this.$store.state.loggedUser.id
+        const post = {
+          id: this.$store.state.editingPost,
+          title: document.querySelector('input').value,
+          description: document.querySelector('textarea').value,
+          claps: this.$store.state.posts.find((item) => item.id === this.$store.state.editingPost).claps,
+          createdAt: this.$store.state.posts.find((item) => item.id === this.$store.state.editingPost).createdAt,
+          updateAt: new Date(),
+          userId: this.$store.state.loggedUser.id
+        }
         this.$store.dispatch('editPost', post)
       }
       this.$parent.close()
