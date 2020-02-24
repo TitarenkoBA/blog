@@ -53,6 +53,9 @@ export default {
     loggedUser () {
       return this.$store.state.loggedUser
     }
+  },
+  beforeMount () {
+    this.$store.dispatch('getLoggedUser')
   }
 }
 </script>

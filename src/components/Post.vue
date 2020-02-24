@@ -37,7 +37,7 @@ export default {
   props: ['post'],
   methods: {
     clap () {
-      this.$store.dispatch('clapPost', this.post.id)
+      this.$store.dispatch('clapPost', this.post)
     },
     remove () {
       this.$store.dispatch('deletePost', this.post.id)

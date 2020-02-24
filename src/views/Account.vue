@@ -4,8 +4,6 @@
     <div class="container-small" v-if="this.$store.state.loggedUser.id">
       <p>ID: {{this.loggedUser.id}}</p>
       <p>Email: {{this.loggedUser.login}}</p>
-      <p>Password: {{this.loggedUser.password}}</p>
-      <ChangePassword />
       <p>Role: {{this.loggedUser.role}}</p>
     </div>
     <p v-else>You must be log in for see more information</p>
@@ -13,13 +11,9 @@
 </template>
 
 <script>
-import ChangePassword from '@/components/ChangePassword.vue'
 
 export default {
   name: 'Account',
-  components: {
-    ChangePassword
-  },
   computed: {
     loggedUser () {
       return this.$store.state.loggedUser

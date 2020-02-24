@@ -19,7 +19,7 @@ const remove = (posts, req) => {
 }
 
 const clap = (posts, req) => {
-  const find = posts.find((item) => item.id === 18)
+  const find = posts.find((item) => item.id === +req.body.id)
   find.claps++
   return JSON.stringify(posts, null, 4)
 }

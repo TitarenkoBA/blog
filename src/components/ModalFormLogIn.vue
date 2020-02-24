@@ -46,11 +46,10 @@ export default {
         email: document.querySelector('[type="email"]').value,
         password: document.querySelector('[type="password"]').value
       }
-      const LogInUser = this.$store.state.users.find((item) => (item.login === user.email) && (item.password === user.password))
-      if (LogInUser) {
-        this.$store.dispatch('logIn', LogInUser).then(() => this.$router.push('/'))
-        this.$parent.close()
-      }
+      this.$store.dispatch('logIn', user)
+        .then(() => this.$store.dispatch('getLoggedUser'))
+        .then(() => this.$router.push('/'))
+      this.$parent.close()
     }
   }
 }

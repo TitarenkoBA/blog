@@ -14,6 +14,75 @@ app.get('/api/posts', (req, res) => {
   })
 })
 
+app.get('/api/loggedUser', (req, res) => {
+  fs.readFile('server/db/loggedUser.json', 'utf-8', (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+    } else {
+      res.send(JSON.stringify(data, null, 4))
+    }
+  })
+})
+
+app.put('/api/logInUser', (req, res) => {
+  fs.readFile('server/db/users.json', 'utf-8', (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+    } else {
+      const users = JSON.parse(data)
+      const logInUser = users.find((item) => (item.login === req.body.email))
+      if (String(logInUser.password) === String(req.body.password)) {
+        const newLogInUser = {
+          id: logInUser.id,
+          login: logInUser.login,
+          role: logInUser.role
+        }
+        fs.writeFile('server/db/loggedUser.json', JSON.stringify(newLogInUser, null, 4), (err) => {
+          if (err) {
+            res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+          } else {
+            res.send({ result: 1, text: 'Success' })
+          }
+        })
+      }
+    }
+  })
+})
+
+app.put('/api/logOutUser', (req, res) => {
+  fs.writeFile('server/db/loggedUser.json', JSON.stringify({}, null, 4), (err) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+    } else {
+      res.send({ result: 1, text: 'Success' })
+    }
+  })
+})
+
+app.post('/api/signUp', (req, res) => {
+  fs.readFile('server/db/users.json', 'utf-8', (err, data) => {
+    if (err) {
+      res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+    } else {
+      const users = JSON.parse(data)
+      users.unshift(req.body)
+      fs.writeFile('server/db/users.json', JSON.stringify(users, null, 4), (err) => {
+        if (err) {
+          res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+        } else {
+          fs.writeFile('server/db/loggedUser.json', JSON.stringify(req.body, null, 4), (err) => {
+            if (err) {
+              res.sendStatus(404, JSON.stringify({ result: 0, text: err }))
+            } else {
+              res.send({ result: 1, text: 'Success' })
+            }
+          })
+        }
+      })
+    }
+  })
+})
+
 const handler = require('./handler')
 
 app.post('/api/posts', (req, res) => {

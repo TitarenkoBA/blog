@@ -8,12 +8,7 @@ export default new Vuex.Store({
   state: {
     buttonType: '',
     editingPost: '',
-    loggedUser: {
-      id: 2,
-      login: 'writer@mail.com',
-      password: '123456',
-      role: 'writer'
-    },
+    loggedUser: {},
     users: [
       {
         id: 1,
@@ -32,14 +27,17 @@ export default new Vuex.Store({
   },
   mutations: {
     SignUp (state, user) {
-      this.state.users.push(user)
-      this.state.loggedUser = { ...user }
+      this.state.loggedUser = {}
+      this.state.loggedUser.id = user.id
+      this.state.loggedUser.login = user.login
+      this.state.loggedUser.id = user.role
     },
     logOut (state) {
       this.state.loggedUser = {}
     },
     logIn (state, user) {
-      this.state.loggedUser = { ...user }
+      this.state.loggedUser = {}
+      this.state.loggedUser = user
     },
     createPost (state, post) {
       this.state.posts.unshift(post)
@@ -54,8 +52,8 @@ export default new Vuex.Store({
       editingPost.updateAt = post.updateAt
       editingPost.userId = post.userId
     },
-    clapPost (state, postID) {
-      this.state.posts.find((item) => item.id === postID).claps++
+    clapPost (state, post) {
+      this.state.posts.find((item) => item.id === post.id).claps++
     },
     rememberEditingPost (state, postID) {
       this.state.editingPost = postID
@@ -69,17 +67,40 @@ export default new Vuex.Store({
     },
     loadPosts (state, data) {
       this.state.posts = data
+    },
+    getLoggedUser (state, data) {
+      this.state.loggedUser = data
     }
   },
   actions: {
     SignUp (context, user) {
+      Axios.post('/api/signUp', user)
+        .then(context.commit('SignUp', user))
+        .catch(error => {
+          console.log(error)
+        })
       context.commit('SignUp', user)
     },
+    getLoggedUser (context) {
+      Axios.get('/api/loggedUser')
+        .then(response => context.commit('getLoggedUser', JSON.parse(response.data)))
+        .catch(error => {
+          console.log(error)
+        })
+    },
     logOut (context) {
-      context.commit('logOut')
+      Axios.put('/api/logOutUser', {})
+        .then(context.commit('logOut'))
+        .catch(error => {
+          console.log(error)
+        })
     },
     logIn (context, user) {
-      context.commit('logIn', user)
+      Axios.put('/api/logInUser', user)
+        .then(context.commit('logIn', user))
+        .catch(error => {
+          console.log(error)
+        })
     },
     createPost (context, post) {
       Axios.post('/api/posts', post)
@@ -102,9 +123,9 @@ export default new Vuex.Store({
           console.log(error)
         })
     },
-    clapPost (context, postID) {
-      Axios.put('/api/post', postID)
-        .then(context.commit('clapPost', postID))
+    clapPost (context, post) {
+      Axios.put('/api/post', post)
+        .then(context.commit('clapPost', post))
         .catch(error => {
           console.log(error)
         })
