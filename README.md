@@ -1,4 +1,5 @@
 # blog
+Vue + Vue router + Vuex + Buefy + Express
 
 ## Project setup
 ```
