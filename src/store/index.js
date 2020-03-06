@@ -27,49 +27,49 @@ export default new Vuex.Store({
   },
   mutations: {
     SignUp (state, user) {
-      this.state.loggedUser = {}
-      this.state.loggedUser.id = user.id
-      this.state.loggedUser.login = user.login
-      this.state.loggedUser.id = user.role
+      state.loggedUser = {}
+      state.loggedUser.id = user.id
+      state.loggedUser.login = user.login
+      state.loggedUser.id = user.role
     },
     logOut (state) {
-      this.state.loggedUser = {}
+      state.loggedUser = {}
     },
     logIn (state, user) {
-      this.state.loggedUser = {}
-      this.state.loggedUser = user
+      state.loggedUser = {}
+      state.loggedUser = user
     },
     createPost (state, post) {
-      this.state.posts.unshift(post)
+      state.posts.unshift(post)
     },
     deletePost (state, postID) {
-      this.state.posts.splice(this.state.posts.findIndex((item) => item.id === postID), 1)
+      state.posts.splice(state.posts.findIndex((item) => item.id === postID), 1)
     },
     editPost (state, post) {
-      const editingPost = this.state.posts.find((item) => item.id === post.id)
+      const editingPost = state.posts.find((item) => item.id === post.id)
       editingPost.title = post.title
       editingPost.description = post.description
       editingPost.updateAt = post.updateAt
       editingPost.userId = post.userId
     },
     clapPost (state, post) {
-      this.state.posts.find((item) => item.id === post.id).claps++
+      state.posts.find((item) => item.id === post.id).claps++
     },
     rememberEditingPost (state, postID) {
-      this.state.editingPost = postID
+      state.editingPost = postID
     },
     setButtonType (state, button) {
-      this.state.buttonType = button
+      state.buttonType = button
     },
     changePassword (state, newPassword) {
-      this.state.loggedUser = newPassword
-      this.state.users.find((item) => item.id === this.state.loggedUser.id).password = newPassword
+      state.loggedUser = newPassword
+      state.users.find((item) => item.id === state.loggedUser.id).password = newPassword
     },
     loadPosts (state, data) {
-      this.state.posts = data
+      state.posts = data
     },
     getLoggedUser (state, data) {
-      this.state.loggedUser = data
+      state.loggedUser = data
     }
   },
   actions: {
